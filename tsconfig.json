@@ -1,0 +1,97 @@
+{
+  "compilerOptions": {
+    /* ── Compilation cible ───────────────────────────────────────────────
+       ES2017 = compatible avec tous les Android depuis 2017.
+       Next.js transpile ensuite pour les navigateurs plus anciens si besoin. */
+    "target": "ES2017",
+
+    /* ── Bibliothèques disponibles ───────────────────────────────────────
+       "dom"         → accès à window, document, localStorage...
+       "dom.iterable"→ pouvoir itérer sur NodeList, HTMLCollection...
+       "esnext"      → toutes les APIs JS modernes (Promise, Map, Set...) */
+    "lib": ["dom", "dom.iterable", "esnext"],
+
+    /* ── Fichiers JavaScript ─────────────────────────────────────────────
+       allowJs : accepte les fichiers .js si on en a besoin (librairies)
+       skipLibCheck : ne vérifie pas les types dans node_modules (trop lent) */
+    "allowJs": true,
+    "skipLibCheck": true,
+
+    /* ── Mode strict ─────────────────────────────────────────────────────
+       Active d'un coup toutes les vérifications strictes :
+       - noImplicitAny      → pas de variable sans type déclaré
+       - strictNullChecks   → null et undefined doivent être gérés
+       - strictFunctionTypes → les types de fonctions sont vérifiés
+       NE JAMAIS désactiver cette option sur ce projet. */
+    "strict": true,
+
+    /* ── Sortie ──────────────────────────────────────────────────────────
+       noEmit : TypeScript vérifie le code mais ne génère pas de fichiers JS.
+       C'est Next.js qui s'occupe de la compilation réelle via Turbopack. */
+    "noEmit": true,
+
+    /* ── Compatibilité des imports ───────────────────────────────────────
+       esModuleInterop : permet d'importer des modules CommonJS comme des ESModules
+       Ex: import fs from 'fs'  au lieu de  import * as fs from 'fs' */
+    "esModuleInterop": true,
+
+    /* ── Système de modules ──────────────────────────────────────────────
+       module: "esnext"         → garde les imports ES natifs (pas de require)
+       moduleResolution: "bundler" → mode moderne pour Turbopack/Vite/esbuild
+                                     comprend les exports de package.json */
+    "module": "esnext",
+    "moduleResolution": "bundler",
+
+    /* ── Imports JSON ────────────────────────────────────────────────────
+       Permet d'importer des fichiers .json directement
+       Ex: import data from './data.json' */
+    "resolveJsonModule": true,
+
+    /* ── Isolation des modules ───────────────────────────────────────────
+       Chaque fichier est traité indépendamment.
+       Requis pour Turbopack et SWC (le compilateur ultra-rapide de Next.js). */
+    "isolatedModules": true,
+
+    /* ── JSX ─────────────────────────────────────────────────────────────
+       "preserve" = Next.js gère la transformation JSX lui-même.
+       On ne configure pas React.createElement ici. */
+    "jsx": "preserve",
+
+    /* ── Compilation incrémentale ────────────────────────────────────────
+       Mémorise les résultats de compilation précédents.
+       Réduit le temps de vérification TypeScript au fil du développement. */
+    "incremental": true,
+
+    /* ── Plugin Next.js ──────────────────────────────────────────────────
+       Active les vérifications spécifiques à Next.js dans l'éditeur :
+       - Erreurs sur les Server/Client Components mal utilisés
+       - Vérification des types de params/searchParams en App Router */
+    "plugins": [{ "name": "next" }],
+
+    /* ── Alias d'imports ─────────────────────────────────────────────────
+       "@/components/ui/Button"  →  "src/components/ui/Button"
+       Plus besoin de "../../../" dans les imports.
+       TOUJOURS utiliser @/ dans ce projet, jamais les chemins relatifs longs. */
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+
+  /* ── Fichiers à inclure ────────────────────────────────────────────────
+     next-env.d.ts  → types auto-générés par Next.js (ne pas modifier)
+     **/*.ts        → tous les fichiers TypeScript
+     **/*.tsx       → tous les fichiers TypeScript avec JSX (composants React)
+     .next/types/** → types générés par Next.js pour l'App Router 
+    */
+
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  /* ── Fichiers à exclure ────────────────────────────────────────────────
+     node_modules → les librairies ont leurs propres types, pas besoin de les recompiler */
+  "exclude": ["node_modules"]
+}
+
