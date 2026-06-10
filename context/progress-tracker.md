@@ -33,17 +33,17 @@
 | 01 | `package.json` | ✅ Créé | Next.js 15, Tailwind v4, Supabase |
 | 02 | `tsconfig.json` | ✅ fait | |
 | 03 | `next.config.ts` | ✅ À faire | |
-| 04 | `postcss.config.mjs` | ✅ À faire | |
-| 05 | `.env.local.example` | ✅ À faire | |
-| 06 | `src/app/globals.css` | ✅ À faire | Design tokens Tailwind v4 |
-| 07 | `src/app/layout.tsx` | ✅ À faire | PWA metadata |
-| 08 | `src/types/index.ts` | ⬜ À faire | Tous les types TS |
-| 09 | `src/lib/supabase/browser.ts` | ⬜ À faire | |
-| 10 | `src/lib/supabase/server.ts` | ⬜ À faire | |
-| 11 | `src/middleware.ts` | ⬜ À faire | Protection des routes |
-| 12 | `src/app/page.tsx` | ⬜ À faire | Redirect racine |
-| 13 | `src/app/(auth)/layout.tsx` | ⬜ À faire | |
-| 14 | `src/app/(auth)/auth/page.tsx` | ⬜ À faire | Orchestrateur auth |
+| 04 | `postcss.config.mjs` | ✅ fait| |
+| 05 | `.env.local.example` | ✅ fait| |
+| 06 | `src/app/globals.css` | ✅fait | Design tokens Tailwind v4 |
+| 07 | `src/app/layout.tsx` | ✅ fait| PWA metadata |
+| 08 | `src/types/index.ts` | ✅ fait| Tous les types TS |
+| 09 | `src/lib/supabase/browser.ts` | ✅fait | |
+| 10 | `src/lib/supabase/server.ts` | ✅ fait| |
+| 11 | `src/middleware.ts` | ✅fait | Protection des routes |
+| 12 | `src/app/page.tsx` | ✅ fait| Redirect racine |
+| 13 | `src/app/(auth)/layout.tsx` | ✅ fait |
+| 14 | `src/app/(auth)/auth/page.tsx` | ✅fait | Orchestrateur auth |
 | 15 | `src/components/features/auth/PhoneStep.tsx` | ⬜ À faire | |
 | 16 | `src/components/features/auth/OtpStep.tsx` | ⬜ À faire | |
 | 17 | `src/app/(app)/layout.tsx` | ⬜ À faire | Layout protégé |
