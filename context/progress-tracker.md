@@ -43,11 +43,11 @@
 | 11 | `src/middleware.ts` | ✅fait | Protection des routes |
 | 12 | `src/app/page.tsx` | ✅ fait| Redirect racine |
 | 13 | `src/app/(auth)/layout.tsx` | ✅ fait |
-| 14 | `src/app/(auth)/auth/page.tsx` | ✅fait | Orchestrateur auth |
-| 15 | `src/components/features/auth/PhoneStep.tsx` | ⬜ À faire | |
-| 16 | `src/components/features/auth/OtpStep.tsx` | ⬜ À faire | |
-| 17 | `src/app/(app)/layout.tsx` | ⬜ À faire | Layout protégé |
-| 18 | `src/app/(app)/dashboard/page.tsx` | ⬜ À faire | Placeholder S1 |
+| 14 | `src/app/(auth)/auth/page.tsx` | ✅ fait  | Orchestrateur auth |
+| 15 | `src/components/features/auth/PhoneStep.tsx` | ✅ fait | |
+| 16 | `src/components/features/auth/OtpStep.tsx` | ✅ fait | |
+| 17 | `src/app/(app)/layout.tsx` | ✅ fait | Layout protégé |
+| 18 | `src/app/(app)/dashboard/page.tsx` | ✅ fait | Placeholder S1 |
 | 19 | `supabase/schema.sql` | ⬜ À faire | |
 | 20 | `public/manifest.json` | ⬜ À faire | PWA |
 | 21 | `README.md` | ⬜ À faire | Instructions setup |
