@@ -1,10 +1,10 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { maskPhone, LIMITS } from '@/types'
+import { LIMITS } from '@/types'
 
 interface OtpStepProps {
-  phone: string
+  email: string
   onSubmit: (code: string) => Promise<void>
   onBack: () => void
   onResend: () => Promise<void>
@@ -22,7 +22,7 @@ interface OtpStepProps {
  * - Countdown de 60s avant de pouvoir renvoyer le SMS
  */
 export default function OtpStep({
-  phone, onSubmit, onBack, onResend, error, isPending,
+  email, onSubmit, onBack, onResend, error, isPending,
 }: OtpStepProps) {
   const [digits, setDigits]     = useState<string[]>(Array(LIMITS.OTP_LENGTH).fill(''))
   const [loading, setLoading]   = useState(false)
@@ -134,7 +134,7 @@ export default function OtpStep({
         >
           <path d="M19 12H5M12 19l-7-7 7-7" />
         </svg>
-        <span className="text-sm">Changer de numéro</span>
+        <span className="text-sm">Changer d&apos;email</span>
       </button>
 
       {/* ── Titre ─────────────────────────────────────────────────────── */}
@@ -146,9 +146,9 @@ export default function OtpStep({
           Code de vérification
         </h1>
         <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
-          On a envoyé un code à 6 chiffres au{' '}
+          On a envoyé un code à 6 chiffres à{' '}
           <span className="font-medium" style={{ color: 'var(--color-text-gold)' }}>
-            {maskPhone(phone)}
+            {maskEmail(email)}
           </span>
         </p>
       </div>
@@ -252,12 +252,23 @@ export default function OtpStep({
         <p className="text-xs leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
           💡{' '}
           <strong className="font-medium" style={{ color: 'var(--color-text-secondary)' }}>
-            Pas de SMS ?
+            Pas d&apos;email reçu ?
           </strong>{' '}
-          Vérifie ta connexion réseau. Les SMS peuvent prendre jusqu&apos;à
-          2 minutes sur les réseaux Airtel et Orange en RDC.
+          Vérifie ton dossier spam ou courrier indésirable. L&apos;email peut
+          prendre jusqu&apos;à 1 minute pour arriver.
         </p>
       </div>
     </div>
   )
+}
+
+/**
+ * Masque une adresse email pour l'affichage.
+ * Ex: "celeste@gmail.com" → "ce***@gmail.com"
+ */
+function maskEmail(email: string): string {
+  const [local, domain] = email.split('@')
+  if (!domain) return email
+  const visible = local.slice(0, 2)
+  return `${visible}${'*'.repeat(Math.max(local.length - 2, 3))}@${domain}`
 }

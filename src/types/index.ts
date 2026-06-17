@@ -1,12 +1,11 @@
-
 /* ═══════════════════════════════════════════════════════════════════════════
    LIKELEMBAAPP — Types TypeScript partagés
    Source de vérité pour tous les types du projet.
    Importer depuis '@/types' dans chaque fichier qui en a besoin.
    NE JAMAIS redéfinir un type ailleurs dans l'app.
    ═══════════════════════════════════════════════════════════════════════════ */
- 
- 
+
+
 /* ═══════════════════════════════════════════════════════════════════════════
    UNIONS — Types à valeurs fixes
    On utilise 'type' (pas 'interface') pour les unions de strings.
@@ -14,42 +13,40 @@
    Ex: status: 'actif' → erreur TypeScript car 'actif' ∉ GroupStatus
    ═══════════════════════════════════════════════════════════════════════════ */
 
-   export type UserRole  = 'member' | 'organizer';
-   export type GroupStatus = 'active' | 'paused' | 'completed';
-   export type ContribStatus = 'pending' | 'paid' | 'late';
-   export type PaymentMethod = 'airtel_money' | 'orange_money' | 'Mpesa' | 'cash' | 'manual';
-   export type NotifChannel = 'email' | 'sms' | 'push' | 'in_app' | 'whatsapp';
-   export type GroupFrequency = 'weekly' | 'biweekly' | 'monthly';
-   export type Currency = 'USD' | 'CDF' ;
-   export type PayoutStatus = 'pending' | 'paid';
-   export type ReminderStatus = 'sent' | 'delivered' | 'failed';
-   export type SubscriptionPlan = 'free' | 'organizer' | 'pro';
+export type UserRole         = 'member' | 'organizer'
+export type GroupStatus      = 'active' | 'paused' | 'completed'
+export type ContribStatus    = 'pending' | 'paid' | 'late'
+export type PaymentMethod    = 'airtel_money' | 'orange_money' | 'cash' | 'manual'
+export type NotifChannel     = 'whatsapp' | 'sms'
+export type GroupFrequency   = 'weekly' | 'biweekly' | 'monthly'
+export type Currency         = 'CDF' | 'USD'
+export type PayoutStatus     = 'pending' | 'paid'
+export type ReminderStatus   = 'sent' | 'delivered' | 'failed'
+export type SubscriptionPlan = 'free' | 'organizer' | 'pro'
 
 
-   
 /* ═══════════════════════════════════════════════════════════════════════════
    ENTITÉS — Correspondent exactement aux tables Supabase
    On utilise 'interface' pour les objets de données.
    Chaque champ correspond à une colonne de la base de données.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-   /* ── Profil utilisateur ──────────────────────────────────────────────────── */
-   export interface Profile{
-     id: string                    // uuid — même ID que auth.users
-     email: string;
-     phone: string                 // format E.164 : +243970000000
-     name: string | null           // null si l'utilisateur n'a pas encore complété son profil
-     avatar_url: string | null     // URL Supabase Storage (null = avatar généré)
-     role: UserRole                // 'member' par défaut, 'organizer' si abonnement actif
-     mobile_money_number: string | null  // numéro pour recevoir les versements
-     reliability_score: number     // 0–100, calculé depuis l'historique des cotisations
-     created_at: string            // ISO 8601 : "2025-01-15T09:30:00Z"
-     updated_at: string
-   }
+/* ── Profil utilisateur ──────────────────────────────────────────────────── */
+export interface Profile {
+  id: string                    // uuid — même ID que auth.users
+  email: string | null          // Sprint 1-5 : méthode d'auth principale
+  phone: string | null          // Sprint 6+ : deviendra la méthode d'auth principale
+  name: string | null           // null si l'utilisateur n'a pas encore complété son profil
+  avatar_url: string | null     // URL Supabase Storage (null = avatar généré)
+  role: UserRole                // 'member' par défaut, 'organizer' si abonnement actif
+  mobile_money_number: string | null  // numéro pour recevoir les versements
+  reliability_score: number     // 0–100, calculé depuis l'historique des cotisations
+  created_at: string            // ISO 8601 : "2025-01-15T09:30:00Z"
+  updated_at: string
+}
 
-   /* ── Groupe likelemba ────────────────────────────────────────────────────── */
-
-   export interface Group {
+/* ── Groupe likelemba ────────────────────────────────────────────────────── */
+export interface Group {
   id: string
   name: string
   organizer_id: string          // référence profiles.id
@@ -110,8 +107,8 @@ export interface Reminder {
   channel: NotifChannel
   status: ReminderStatus
 }
- 
- 
+
+
 /* ═══════════════════════════════════════════════════════════════════════════
    TYPES ENRICHIS — Entités avec leurs relations chargées
    Supabase peut retourner des jointures (select avec relations).
@@ -137,6 +134,7 @@ export interface ContributionWithProfile extends Contribution {
   profile: Profile
 }
 
+
 /* ═══════════════════════════════════════════════════════════════════════════
    TYPES UTILITAIRES — Pour les formulaires et les états UI
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -157,7 +155,7 @@ export interface CreateGroupForm {
   description?: string
   currency: Currency
 }
- 
+
 /* Données du formulaire de profil */
 export interface UpdateProfileForm {
   name: string
@@ -202,13 +200,6 @@ export const MOBILE_MONEY_OPTIONS: MobileMoneyOption[] = [
     logo: '🟡',
   },
   {
-    id: 'Mpesa',
-    label: 'M-Pesa',
-    color: '#0080FF',
-    prefix: '+243 84',
-    logo: '🟡',
-  },
-  {
     id: 'manual',
     label: 'Paiement cash',
     color: '#5DCAA5',
@@ -234,7 +225,6 @@ export const AVATAR_COLORS: { bg: string; text: string }[] = [
   { bg: '#26215C', text: '#AFA9EC' },   // deep purple
   { bg: '#085041', text: '#5DCAA5' },   // deep teal
 ]
-
 
 /* Limites métier */
 export const LIMITS = {
@@ -274,16 +264,15 @@ export function formatCurrency(
  * Accepte : "0970000000", "+243970000000", "970000000", "243970000000"
  * Retourne null si le format est invalide.
  */
-
 export function normalizePhone(input: string): string | null {
   // Supprime espaces, tirets, parenthèses
   const digits = input.replace(/[\s\-\(\)\.]/g, '')
- 
+
   if (digits.startsWith('+243') && digits.length === 13) return digits
   if (digits.startsWith('243') && digits.length === 12)  return `+${digits}`
   if (digits.startsWith('0') && digits.length === 10)    return `+243${digits.slice(1)}`
   if (digits.length === 9)                               return `+243${digits}`
- 
+
   return null
 }
 
@@ -297,7 +286,7 @@ export function maskPhone(phone: string): string {
     '$1 $2 *** $4'
   )
 }
- 
+
 /**
  * Calcule la progression d'un groupe en pourcentage.
  * Ex: progress(7, 12) → 58
@@ -306,7 +295,7 @@ export function groupProgress(current: number, total: number): number {
   if (total === 0) return 0
   return Math.round((current / total) * 100)
 }
- 
+
 /**
  * Retourne la couleur d'avatar pour un nom donné.
  * Déterministe : le même nom retourne toujours la même couleur.
@@ -315,7 +304,7 @@ export function getAvatarColor(name: string): { bg: string; text: string } {
   const index = name.charCodeAt(0) % AVATAR_COLORS.length
   return AVATAR_COLORS[index]
 }
- 
+
 /**
  * Retourne les initiales d'un nom (1 ou 2 lettres).
  * Ex: "Mama Céleste" → "MC"
@@ -326,4 +315,3 @@ export function getInitials(name: string): string {
   if (parts.length === 1) return parts[0][0].toUpperCase()
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
 }
- 
