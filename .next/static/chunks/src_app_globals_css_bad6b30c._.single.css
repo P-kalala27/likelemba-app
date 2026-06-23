@@ -479,6 +479,40 @@
     position: relative;
   }
 
+  .container {
+    width: 100%;
+  }
+
+  @media (min-width: 40rem) {
+    .container {
+      max-width: 40rem;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .container {
+      max-width: 48rem;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .container {
+      max-width: 64rem;
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .container {
+      max-width: 80rem;
+    }
+  }
+
+  @media (min-width: 96rem) {
+    .container {
+      max-width: 96rem;
+    }
+  }
+
   .mx-auto {
     margin-left: auto;
     margin-right: auto;
@@ -520,8 +554,16 @@
     display: flex;
   }
 
+  .hidden {
+    display: none;
+  }
+
   .inline {
     display: inline;
+  }
+
+  .inline-flex {
+    display: inline-flex;
   }
 
   .table {

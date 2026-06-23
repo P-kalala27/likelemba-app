@@ -21,4 +21,9 @@ export default async function RootPage() {
     } else {
         redirect("/auth");
     }
+
+    /* Ce return n'est jamais atteint — redirect() lance une exception interne
+       Next.js qui interrompt l'exécution. Mais TypeScript (mode strict sur Vercel)
+       exige un return JSX pour reconnaître le fichier comme un module React valide. */
+    return null;
 }
