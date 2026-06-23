@@ -77,12 +77,11 @@
     }
   },
 
-  /* ── Fichiers à inclure ────────────────────────────────────────────────
-     next-env.d.ts  → types auto-générés par Next.js (ne pas modifier)
-     **/*.ts        → tous les fichiers TypeScript
-     **/*.tsx       → tous les fichiers TypeScript avec JSX (composants React)
-     .next/types/** → types générés par Next.js pour l'App Router 
-    */
+  // ── Fichiers à inclure ────────────────────────────────────────────────
+  // next-env.d.ts  → types auto-générés par Next.js (ne pas modifier)
+  // **/*.ts        → tous les fichiers TypeScript
+  // **/*.tsx       → tous les fichiers TypeScript avec JSX (composants React)
+  // .next/types/** → types générés par Next.js pour l'App Router
 
   "include": [
     "next-env.d.ts",

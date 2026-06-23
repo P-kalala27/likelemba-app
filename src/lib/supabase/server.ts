@@ -40,9 +40,9 @@ export async function getSupabaseServer() {
            Le try/catch est nécessaire car dans certains contextes
            (Server Components en lecture seule), setAll peut échouer.
            Dans ce cas, le middleware prend le relais. */
-           setAll(cookiesToSet){
+           setAll(cookiesToSet: any[]){
             try {
-                cookiesToSet.forEach(({name, value, options}) => {
+                cookiesToSet.forEach(({name, value, options}: any) => {
                     cookieStore.set(name, value, options)
                 })
             } catch (error) {

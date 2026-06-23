@@ -26,7 +26,7 @@ export default function OtpStep({
 }: OtpStepProps) {
   const [digits, setDigits]     = useState<string[]>(Array(LIMITS.OTP_LENGTH).fill(''))
   const [loading, setLoading]   = useState(false)
-  const [countdown, setCountdown] = useState(LIMITS.RESEND_COOLDOWN_SEC)
+  const [countdown, setCountdown] = useState<number>(LIMITS.RESEND_COOLDOWN_SEC)
   const [resending, setResending] = useState(false)
 
   /* Référence vers chaque input pour gérer le focus programmatiquement */

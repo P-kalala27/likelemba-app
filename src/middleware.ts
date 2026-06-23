@@ -1,5 +1,4 @@
 import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
 import { NextResponse, type NextRequest } from "next/server";
 
 
@@ -30,6 +29,7 @@ const AUTH_ROUTES = [
 
 const PUBLIC_PREFIXES = [
     '/join',
+    '/auth/callback',
 ]
 
 /**
@@ -41,6 +41,26 @@ const PUBLIC_PREFIXES = [
  */
 
 export async function middleware(request: NextRequest) {
+    const { pathname, searchParams } = request.nextUrl;
+
+    /* ── 0. Routes publiques → court-circuit immédiat ──────────────────────
+       On vérifie AVANT de créer le client Supabase pour éviter un appel
+       réseau inutile (getUser) sur /auth/callback, /join, etc. */
+
+    const isPublic = PUBLIC_PREFIXES.some(prefix =>
+      pathname.startsWith(prefix)
+    )
+    if (isPublic) return NextResponse.next({ request });
+
+    /* ── 1. Intercepter les ?code= sur d'autres routes ────────────────────
+       Si Supabase redirige vers une route autre que /auth/callback avec
+       un code, on reroute vers le callback. */
+    if (searchParams.has('code') && pathname !== '/auth/callback') {
+        const redirectUrl = request.nextUrl.clone();
+        redirectUrl.pathname = '/auth/callback';
+        return NextResponse.redirect(redirectUrl);
+    }
+
     /* On crée une réponse "passe-partout" par défaut.
      On la modifie si besoin (redirect) ou on la retourne telle quelle. */
 
@@ -58,16 +78,16 @@ export async function middleware(request: NextRequest) {
                 getAll() {
                     return request.cookies.getAll();
                 }, 
-                setAll(cookiesToSet) {
+                setAll(cookiesToSet: any[]) {
                     /* Étape 1 : mettre à jour les cookies sur la requête */
-                    cookiesToSet.forEach(({name, value}) => 
+                    cookiesToSet.forEach(({name, value}: any) => 
                     request.cookies.set(name, value)
                 )
                 /* Étape 2 : recréer la réponse avec les cookies mis à jour */
                 response = NextResponse.next({request})
                 /* Étape 3 : mettre à jour les cookies sur la réponse
              (c'est ce que le navigateur recevra et sauvegardera) */
-             cookiesToSet.forEach(({name, value, options}) =>
+             cookiesToSet.forEach(({name, value, options}: any) =>
                 response.cookies.set(name, value, options)
              )
                 }
@@ -81,17 +101,7 @@ export async function middleware(request: NextRequest) {
 
     const {data : {user} } = await supabase.auth.getUser();
 
-    const { pathname } = request.nextUrl;
-
     /* ── Vérifications dans l'ordre de priorité ─────────────────────────── */
- 
-  /* 1. Route entièrement publique → laisser passer sans vérification */
-
-  const isPublic = PUBLIC_PREFIXES.some(prefix => 
-    pathname.startsWith(prefix)
-  )
-
-  if(isPublic) return response;
 
   /* 2. Route protégée + utilisateur non connecté → redirect /auth */
 

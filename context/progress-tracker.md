@@ -48,9 +48,9 @@
 | 16 | `src/components/features/auth/OtpStep.tsx` | ✅ fait | |
 | 17 | `src/app/(app)/layout.tsx` | ✅ fait | Layout protégé |
 | 18 | `src/app/(app)/dashboard/page.tsx` | ✅ fait | Placeholder S1 |
-| 19 | `supabase/schema.sql` | ⬜ À faire | |
-| 20 | `public/manifest.json` | ⬜ À faire | PWA |
-| 21 | `README.md` | ⬜ À faire | Instructions setup |
+| 19 | `supabase/schema.sql` | ✅ fait| |
+| 20 | `public/manifest.json` | ✅ fait | PWA |
+| 21 | `README.md` | ✅ fait  | Instructions setup |
 
 ### Checklist de validation finale
 

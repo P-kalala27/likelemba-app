@@ -50,6 +50,7 @@ export default function AuthPage() {
         /* shouldCreateUser: true = crée un compte si l'email est nouveau.
            Le trigger Supabase créera automatiquement le profil (schema.sql). */
         shouldCreateUser: true,
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
     })
 
