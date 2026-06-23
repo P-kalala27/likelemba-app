@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { Suspense, useState, useTransition } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { getSupabaseBrowser } from '@/lib/supabase/browser'
 import EmailStep from '@/components/features/auth/EmailStep'
@@ -26,7 +26,7 @@ type AuthStep = 'email' | 'otp'
  * 4. handleVerifyOtp → Supabase vérifie le code
  * 5. Succès     → redirect vers /dashboard (ou l'URL d'origine)
  */
-export default function AuthPage() {
+function AuthPageContent() {
   const router       = useRouter()
   const searchParams = useSearchParams()
   const supabase     = getSupabaseBrowser()
@@ -165,5 +165,17 @@ export default function AuthPage() {
 
       </div>
     </main>
+  )
+}
+
+/**
+ * Wrapper avec Suspense — requis par Next.js 15 pour useSearchParams().
+ * Sans ça, le build échoue car Next ne peut pas prérender la page.
+ */
+export default function AuthPage() {
+  return (
+    <Suspense>
+      <AuthPageContent />
+    </Suspense>
   )
 }
